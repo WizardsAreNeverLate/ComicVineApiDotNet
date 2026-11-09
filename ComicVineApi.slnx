@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ComicVine.Api/ComicVine.Api.csproj" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/ComicVine.Api.Sample/ComicVine.Api.Sample.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ComicVine.Api.Tests/ComicVine.Api.Tests.csproj" />
+  </Folder>
+</Solution>

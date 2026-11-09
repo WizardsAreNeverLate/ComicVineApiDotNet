@@ -1,0 +1,5459 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Comic Vine API",
+    "version": "1.0.0",
+    "description": "The generated client sets `api_key` and `format=json` through its auth provider. Unofficial OpenAPI description derived from https://comicvine.gamespot.com/api/documentation. The docs give field names but not types, so types are inferred; most scalar fields are nullable strings. Live behavior: an unknown detail id returns HTTP 200 with status_code 101 and an empty results array, while an invalid key returns HTTP 401. Detail-URL type prefixes (e.g. 4005 for character) are not in the docs but were verified against the live API (video_type and video_category use plain ids). Comic Vine requires a descriptive User-Agent header."
+  },
+  "servers": [
+    {
+      "url": "https://comicvine.gamespot.com/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Character"
+    },
+    {
+      "name": "Chat"
+    },
+    {
+      "name": "Concept"
+    },
+    {
+      "name": "Episode"
+    },
+    {
+      "name": "Issue"
+    },
+    {
+      "name": "Location"
+    },
+    {
+      "name": "Movie"
+    },
+    {
+      "name": "Object"
+    },
+    {
+      "name": "Origin"
+    },
+    {
+      "name": "Person"
+    },
+    {
+      "name": "Power"
+    },
+    {
+      "name": "Promo"
+    },
+    {
+      "name": "Publisher"
+    },
+    {
+      "name": "Series"
+    },
+    {
+      "name": "StoryArc"
+    },
+    {
+      "name": "Team"
+    },
+    {
+      "name": "Video"
+    },
+    {
+      "name": "VideoType"
+    },
+    {
+      "name": "VideoCategory"
+    },
+    {
+      "name": "Volume"
+    },
+    {
+      "name": "Types"
+    }
+  ],
+  "paths": {
+    "/characters/": {
+      "get": {
+        "operationId": "listCharacter",
+        "tags": [
+          "Character"
+        ],
+        "summary": "List characters",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of characters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Character"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Character"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/character/{guid}/": {
+      "get": {
+        "operationId": "getCharacter",
+        "tags": [
+          "Character"
+        ],
+        "summary": "Get a character",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4005-1"
+            },
+            "description": "Type-prefixed id: `4005-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A character",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Character"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Character"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chats/": {
+      "get": {
+        "operationId": "listChat",
+        "tags": [
+          "Chat"
+        ],
+        "summary": "List chats",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of chats",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Chat"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Chat"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chat/{id}/": {
+      "get": {
+        "operationId": "getChat",
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Get a chat",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A chat",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Chat"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Chat"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concepts/": {
+      "get": {
+        "operationId": "listConcept",
+        "tags": [
+          "Concept"
+        ],
+        "summary": "List concepts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of concepts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Concept"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Concept"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concept/{guid}/": {
+      "get": {
+        "operationId": "getConcept",
+        "tags": [
+          "Concept"
+        ],
+        "summary": "Get a concept",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4015-1"
+            },
+            "description": "Type-prefixed id: `4015-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A concept",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Concept"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Concept"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/episodes/": {
+      "get": {
+        "operationId": "listEpisode",
+        "tags": [
+          "Episode"
+        ],
+        "summary": "List episodes",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of episodes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Episode"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Episode"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/episode/{guid}/": {
+      "get": {
+        "operationId": "getEpisode",
+        "tags": [
+          "Episode"
+        ],
+        "summary": "Get a episode",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4070-1"
+            },
+            "description": "Type-prefixed id: `4070-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A episode",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Episode"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Episode"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/issues/": {
+      "get": {
+        "operationId": "listIssue",
+        "tags": [
+          "Issue"
+        ],
+        "summary": "List issues",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of issues",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Issue"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Issue"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/issue/{guid}/": {
+      "get": {
+        "operationId": "getIssue",
+        "tags": [
+          "Issue"
+        ],
+        "summary": "Get a issue",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4000-1"
+            },
+            "description": "Type-prefixed id: `4000-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A issue",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Issue"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Issue"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/locations/": {
+      "get": {
+        "operationId": "listLocation",
+        "tags": [
+          "Location"
+        ],
+        "summary": "List locations",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of locations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Location"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Location"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/location/{guid}/": {
+      "get": {
+        "operationId": "getLocation",
+        "tags": [
+          "Location"
+        ],
+        "summary": "Get a location",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4020-1"
+            },
+            "description": "Type-prefixed id: `4020-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A location",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Location"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Location"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/": {
+      "get": {
+        "operationId": "listMovie",
+        "tags": [
+          "Movie"
+        ],
+        "summary": "List movies",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of movies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Movie"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Movie"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movie/{guid}/": {
+      "get": {
+        "operationId": "getMovie",
+        "tags": [
+          "Movie"
+        ],
+        "summary": "Get a movie",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4025-1"
+            },
+            "description": "Type-prefixed id: `4025-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Movie"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Movie"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/objects/": {
+      "get": {
+        "operationId": "listObject",
+        "tags": [
+          "Object"
+        ],
+        "summary": "List objects",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Object"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Object"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/object/{guid}/": {
+      "get": {
+        "operationId": "getObject",
+        "tags": [
+          "Object"
+        ],
+        "summary": "Get a object",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4055-1"
+            },
+            "description": "Type-prefixed id: `4055-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Object"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Object"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/origins/": {
+      "get": {
+        "operationId": "listOrigin",
+        "tags": [
+          "Origin"
+        ],
+        "summary": "List origins",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of origins",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Origin"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Origin"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/origin/{guid}/": {
+      "get": {
+        "operationId": "getOrigin",
+        "tags": [
+          "Origin"
+        ],
+        "summary": "Get a origin",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4030-1"
+            },
+            "description": "Type-prefixed id: `4030-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A origin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Origin"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Origin"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/people/": {
+      "get": {
+        "operationId": "listPerson",
+        "tags": [
+          "Person"
+        ],
+        "summary": "List people",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of people",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Person"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Person"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/person/{guid}/": {
+      "get": {
+        "operationId": "getPerson",
+        "tags": [
+          "Person"
+        ],
+        "summary": "Get a person",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4040-1"
+            },
+            "description": "Type-prefixed id: `4040-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A person",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Person"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Person"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/powers/": {
+      "get": {
+        "operationId": "listPower",
+        "tags": [
+          "Power"
+        ],
+        "summary": "List powers",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of powers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Power"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Power"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/power/{guid}/": {
+      "get": {
+        "operationId": "getPower",
+        "tags": [
+          "Power"
+        ],
+        "summary": "Get a power",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4035-1"
+            },
+            "description": "Type-prefixed id: `4035-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A power",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Power"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Power"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/promos/": {
+      "get": {
+        "operationId": "listPromo",
+        "tags": [
+          "Promo"
+        ],
+        "summary": "List promos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of promos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Promo"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Promo"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/promo/{id}/": {
+      "get": {
+        "operationId": "getPromo",
+        "tags": [
+          "Promo"
+        ],
+        "summary": "Get a promo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A promo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Promo"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Promo"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/publishers/": {
+      "get": {
+        "operationId": "listPublisher",
+        "tags": [
+          "Publisher"
+        ],
+        "summary": "List publishers",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of publishers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Publisher"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Publisher"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/publisher/{guid}/": {
+      "get": {
+        "operationId": "getPublisher",
+        "tags": [
+          "Publisher"
+        ],
+        "summary": "Get a publisher",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4010-1"
+            },
+            "description": "Type-prefixed id: `4010-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A publisher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Publisher"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Publisher"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/story_arcs/": {
+      "get": {
+        "operationId": "listStoryArc",
+        "tags": [
+          "StoryArc"
+        ],
+        "summary": "List story arcs",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of story_arcs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/StoryArc"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/StoryArc"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/story_arc/{guid}/": {
+      "get": {
+        "operationId": "getStoryArc",
+        "tags": [
+          "StoryArc"
+        ],
+        "summary": "Get a story arc",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4045-1"
+            },
+            "description": "Type-prefixed id: `4045-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A story_arc",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/StoryArc"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/StoryArc"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/": {
+      "get": {
+        "operationId": "listTeam",
+        "tags": [
+          "Team"
+        ],
+        "summary": "List teams",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of teams",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Team"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Team"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{guid}/": {
+      "get": {
+        "operationId": "getTeam",
+        "tags": [
+          "Team"
+        ],
+        "summary": "Get a team",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4060-1"
+            },
+            "description": "Type-prefixed id: `4060-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A team",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Team"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Team"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/videos/": {
+      "get": {
+        "operationId": "listVideo",
+        "tags": [
+          "Video"
+        ],
+        "summary": "List videos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of videos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Video"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Video"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/{guid}/": {
+      "get": {
+        "operationId": "getVideo",
+        "tags": [
+          "Video"
+        ],
+        "summary": "Get a video",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "2300-1"
+            },
+            "description": "Type-prefixed id: `2300-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A video",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Video"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Video"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video_types/": {
+      "get": {
+        "operationId": "listVideoType",
+        "tags": [
+          "VideoType"
+        ],
+        "summary": "List video types",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of video_types",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/VideoType"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/VideoType"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video_type/{id}/": {
+      "get": {
+        "operationId": "getVideoType",
+        "tags": [
+          "VideoType"
+        ],
+        "summary": "Get a video type",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A video_type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/VideoType"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/VideoType"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video_categories/": {
+      "get": {
+        "operationId": "listVideoCategory",
+        "tags": [
+          "VideoCategory"
+        ],
+        "summary": "List video categories",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of video_categories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/VideoCategory"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/VideoCategory"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video_category/{id}/": {
+      "get": {
+        "operationId": "getVideoCategory",
+        "tags": [
+          "VideoCategory"
+        ],
+        "summary": "Get a video category",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A video_category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/VideoCategory"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/VideoCategory"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/volumes/": {
+      "get": {
+        "operationId": "listVolume",
+        "tags": [
+          "Volume"
+        ],
+        "summary": "List volumes",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of volumes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Volume"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Volume"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/volume/{guid}/": {
+      "get": {
+        "operationId": "getVolume",
+        "tags": [
+          "Volume"
+        ],
+        "summary": "Get a volume",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4050-1"
+            },
+            "description": "Type-prefixed id: `4050-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A volume",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Volume"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Volume"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/series_list/": {
+      "get": {
+        "operationId": "listSeriesList",
+        "tags": [
+          "Series"
+        ],
+        "summary": "List series (series_list resource)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of series",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Series"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Series"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/types/": {
+      "get": {
+        "operationId": "listTypes",
+        "tags": [
+          "Types"
+        ],
+        "summary": "List resource types",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource types",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Types"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Types"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/": {
+      "get": {
+        "operationId": "search",
+        "tags": [
+          "Search"
+        ],
+        "summary": "Search across resources",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resources",
+            "in": "query",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "character",
+                  "concept",
+                  "origin",
+                  "object",
+                  "location",
+                  "issue",
+                  "story_arc",
+                  "volume",
+                  "publisher",
+                  "person",
+                  "team",
+                  "video"
+                ]
+              }
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SearchResult"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SearchResult"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/series/{id}/": {
+      "get": {
+        "operationId": "getSeries",
+        "tags": [
+          "Series"
+        ],
+        "summary": "Get a series",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "4075-1"
+            },
+            "description": "Type-prefixed id: `4075-<id>`. Prefix is not in the docs and was inferred; the `guid`/`api_detail_url` returned by list calls is authoritative."
+          },
+          {
+            "$ref": "#/components/parameters/ApiKey"
+          },
+          {
+            "$ref": "#/components/parameters/Format"
+          },
+          {
+            "$ref": "#/components/parameters/FieldList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A series",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Series"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "$ref": "#/components/schemas/Series"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error; see `status_code` in the envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Image": {
+        "type": "object",
+        "properties": {
+          "icon_url": {
+            "type": "string"
+          },
+          "medium_url": {
+            "type": "string"
+          },
+          "screen_url": {
+            "type": "string"
+          },
+          "screen_large_url": {
+            "type": "string"
+          },
+          "small_url": {
+            "type": "string"
+          },
+          "super_url": {
+            "type": "string"
+          },
+          "thumb_url": {
+            "type": "string"
+          },
+          "tiny_url": {
+            "type": "string"
+          },
+          "original_url": {
+            "type": "string"
+          },
+          "image_tags": {
+            "type": "string"
+          }
+        }
+      },
+      "ResourceRef": {
+        "type": "object",
+        "description": "Abbreviated related resource.",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string"
+          },
+          "site_detail_url": {
+            "type": "string"
+          },
+          "issue_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "count": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "Envelope": {
+        "type": "object",
+        "required": [
+          "status_code",
+          "error"
+        ],
+        "properties": {
+          "status_code": {
+            "type": "integer",
+            "enum": [
+              1,
+              100,
+              101,
+              102,
+              103,
+              104,
+              105
+            ],
+            "description": "1 OK, 100 Invalid API Key, 101 Object Not Found, 102 Error in URL Format, 103 jsonp requires json_callback, 104 Filter Error, 105 Subscriber-only video"
+          },
+          "error": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "nullable": true
+          },
+          "offset": {
+            "type": "integer",
+            "nullable": true
+          },
+          "number_of_page_results": {
+            "type": "integer"
+          },
+          "number_of_total_results": {
+            "type": "integer"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "Character": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "birth": {
+            "type": "string",
+            "nullable": true
+          },
+          "character_enemies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "character_friends": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "count_of_issue_appearances": {
+            "type": "integer"
+          },
+          "creators": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_appeared_in_issue": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "gender": {
+            "type": "integer",
+            "description": "1 = Male, 2 = Female, 0 = Other (docs list Male/Female/Other)."
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "issue_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "issues_died_in": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "movies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "origin": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "powers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "publisher": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "real_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "story_arc_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "team_enemies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "team_friends": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "volume_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          }
+        }
+      },
+      "Chat": {
+        "type": "object",
+        "properties": {
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "channel_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Concept": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "count_of_issue_appearances": {
+            "type": "integer"
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_appeared_in_issue": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "issue_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "movies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "start_year": {
+            "type": "string",
+            "nullable": true
+          },
+          "volume_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          }
+        }
+      },
+      "Episode": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "character_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "characters_died_in": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "concept_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "air_date": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_appearance_characters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "first_appearance_concepts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "first_appearance_locations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "first_appearance_objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "first_appearance_storyarcs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "first_appearance_teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "has_staff_review": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "episode_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "location_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "object_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "person_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "story_arc_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "team_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "series": {
+            "$ref": "#/components/schemas/ResourceRef"
+          }
+        }
+      },
+      "Issue": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "character_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "characters_died_in": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "concept_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "cover_date": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "disbanded_teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "first_appearance_characters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "first_appearance_concepts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "first_appearance_locations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "first_appearance_objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "first_appearance_storyarcs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "first_appearance_teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "has_staff_review": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "issue_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "location_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "object_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "person_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "store_date": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "story_arc_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "team_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "teams_disbanded_in": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "volume": {
+            "$ref": "#/components/schemas/ResourceRef"
+          }
+        }
+      },
+      "Location": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "count_of_issue_appearances": {
+            "type": "integer"
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_appeared_in_issue": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "issue_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "movies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "start_year": {
+            "type": "string",
+            "nullable": true
+          },
+          "story_arc_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "volume_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          }
+        }
+      },
+      "Movie": {
+        "type": "object",
+        "properties": {
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "box_office_revenue": {
+            "type": "string",
+            "nullable": true
+          },
+          "budget": {
+            "type": "string",
+            "nullable": true
+          },
+          "characters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "concepts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "distributor": {
+            "type": "string",
+            "nullable": true
+          },
+          "has_staff_review": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "locations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "producers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "rating": {
+            "type": "string",
+            "nullable": true
+          },
+          "release_date": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "runtime": {
+            "type": "string",
+            "nullable": true
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "studios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "things": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "total_revenue": {
+            "type": "string",
+            "nullable": true
+          },
+          "writers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          }
+        }
+      },
+      "Object": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "count_of_issue_appearances": {
+            "type": "integer"
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_appeared_in_issue": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "issue_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "movies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "start_year": {
+            "type": "string",
+            "nullable": true
+          },
+          "story_arc_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "volume_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          }
+        }
+      },
+      "Origin": {
+        "type": "object",
+        "properties": {
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "character_set": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "profiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "birth": {
+            "type": "string",
+            "nullable": true
+          },
+          "count_of_issue_appearances": {
+            "type": "integer"
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_characters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "death": {
+            "type": "string",
+            "nullable": true
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
+            "type": "integer",
+            "description": "1 = Male, 2 = Female, 0 = Other (docs list Male/Female/Other)."
+          },
+          "hometown": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "issue_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "story_arc_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "volume_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "website": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Power": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "characters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Promo": {
+        "type": "object",
+        "properties": {
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "link": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "resource_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Publisher": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "characters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "location_address": {
+            "type": "string",
+            "nullable": true
+          },
+          "location_city": {
+            "type": "string",
+            "nullable": true
+          },
+          "location_state": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "story_arcs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "volumes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          }
+        }
+      },
+      "Series": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "character_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "count_of_episodes": {
+            "type": "integer"
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_episode": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "last_episode": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "location_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "publisher": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "start_year": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "StoryArc": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "count_of_issue_appearances": {
+            "type": "integer"
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_appeared_in_issue": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "movies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "publisher": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Team": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "character_enemies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "character_friends": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "characters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "count_of_issue_appearances": {
+            "type": "integer"
+          },
+          "count_of_team_members": {
+            "type": "integer"
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "disbanded_in_issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "first_appeared_in_issue": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "issue_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "issues_disbanded_in": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "movies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "publisher": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "story_arc_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "volume_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          }
+        }
+      },
+      "Video": {
+        "type": "object",
+        "properties": {
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "hd_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "high_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "length_seconds": {
+            "type": "integer"
+          },
+          "low_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "publish_date": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "VideoType": {
+        "type": "object",
+        "properties": {
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "VideoCategory": {
+        "type": "object",
+        "properties": {
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Volume": {
+        "type": "object",
+        "properties": {
+          "aliases": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "character_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "concept_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "count_of_issues": {
+            "type": "integer"
+          },
+          "date_added": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "date_last_updated": {
+            "type": "string",
+            "description": "Datetime, `YYYY-MM-DD HH:MM:SS` (movie release_date/person birth may be date-only)."
+          },
+          "deck": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_issue": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "last_issue": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "location_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "object_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "person_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          },
+          "publisher": {
+            "$ref": "#/components/schemas/ResourceRef"
+          },
+          "site_detail_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "start_year": {
+            "type": "string",
+            "nullable": true
+          },
+          "team_credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceRef"
+            }
+          }
+        }
+      },
+      "Types": {
+        "type": "object",
+        "properties": {
+          "detail_resource_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer"
+          },
+          "list_resource_name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SearchResult": {
+        "type": "object",
+        "description": "Union of fields of the searched resource types, plus `resource_type`.",
+        "additionalProperties": true,
+        "properties": {
+          "resource_type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "ApiKey": {
+        "name": "api_key",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Your Comic Vine API key. Set by the client auth provider; do not pass it yourself."
+      },
+      "Format": {
+        "name": "format",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "description": "xml, json or jsonp. The client auth provider always sets json."
+      },
+      "JsonCallback": {
+        "name": "json_callback",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "FieldList": {
+        "name": "field_list",
+        "in": "query",
+        "style": "form",
+        "explode": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": "Comma-delimited fields to return."
+      },
+      "Limit": {
+        "name": "limit",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "default": 100,
+          "maximum": 100,
+          "minimum": 1
+        }
+      },
+      "Offset": {
+        "name": "offset",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        }
+      },
+      "Sort": {
+        "name": "sort",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-z_]+:(asc|desc)$"
+        },
+        "description": "`field:asc|desc`."
+      },
+      "Filter": {
+        "name": "filter",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "description": "`field:value`, comma-separated for several. Date ranges: `field:start|end`."
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyQuery": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "api_key"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyQuery": []
+    }
+  ]
+}
